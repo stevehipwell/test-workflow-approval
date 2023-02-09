@@ -17,8 +17,9 @@ jobs:
       actions: write
     steps:
       - name: Test
-        run: |
+        run: |-
           set -euo pipefail
+
           echo "${{ toJSON(github) }}"
 
       - name: Update PR

@@ -11,4 +11,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Test
-        run: echo "I have run..."
+        run: |-
+          set -euo pipefail
+
+          echo "${{ toJSON(github) }}"
+
+          echo "I have run..."
