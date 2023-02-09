@@ -16,11 +16,6 @@ jobs:
     permissions:
       actions: write
     steps:
-      - name: Test
-        run: |
-          set -euo pipefail
-          echo "${{ toJSON(github) }}"
-
       - name: Update PR
         uses: actions/github-script@d556feaca394842dc55e4734bf3bb9f685482fa0 # v6.3.3
         continue-on-error: true
@@ -33,7 +28,7 @@ jobs:
               repo: context.repo.repo,
               event: "pull_request",
               status: "action_required",
-              head_sha: context.sha,
+              head_sha: context.event.pull_request.head.sha,
               per_page: 100
             }).data.workflow_runs;
 
