@@ -23,15 +23,16 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           debug: ${{ secrets.ACTIONS_RUNNER_DEBUG }}
           script: |
-            console.log(context.payload);
-            const workflowRuns = await github.rest.actions.listWorkflowRunsForRepo({
+            const data = await github.rest.actions.listWorkflowRunsForRepo({
               owner: context.repo.owner,
               repo: context.repo.repo,
               event: "pull_request",
               status: "action_required",
               head_sha: context.payload.pull_request.head.sha,
               per_page: 100
-            }).data.workflow_runs;
+            }).data;
+
+            const workflowRuns = data.workflow_runs;
 
             for (var run of workflowRuns) {
               await github.rest.actions.approveWorkflowRun({
